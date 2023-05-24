@@ -54,5 +54,3 @@ class Task(Model):
             host=HOST,
             port=PORT
         )
-
-
