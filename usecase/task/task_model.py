@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 
 from domain.task.task import Task
 
@@ -17,7 +17,7 @@ class TaskUpdateModel(BaseModel):
 
 
 class TaskReadModel(BaseModel):
-    id: int = Field()
+    id: str = Field()
     title: str = Field()
     description: str = Field()
     create_date: datetime = Field()

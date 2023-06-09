@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Optional
 
 
 @dataclass
 class Task:
-    id: int
+    id: str
     title: str
     description: str
-    create_date: datetime
-    is_done: bool
+    create_date: Optional[datetime] = None
+    is_done: bool = False

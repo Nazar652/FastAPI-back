@@ -10,10 +10,10 @@ from usecase.task.task_model import TaskReadModel
 
 class TaskDTO(Base):
     __tablename__ = 'task'
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[str] = mapped_column(Integer, primary_key=True, autoincrement=False)
     title: Mapped[str] = mapped_column(String)
     description: Mapped[str] = mapped_column(String)
-    create_date: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
+    create_date: Mapped[datetime] = mapped_column(DateTime)
     is_done: Mapped[bool] = mapped_column(Boolean, default=False)
 
     def to_entity(self) -> Task:
@@ -32,4 +32,15 @@ class TaskDTO(Base):
             description=self.description,
             create_date=self.create_date,
             is_done=self.is_done
+        )
+
+    @staticmethod
+    def from_entity(task: Task) -> "TaskDTO":
+        now = datetime.now()
+        return TaskDTO(
+            id=task.id,
+            title=task.title,
+            description=task.description,
+            create_date=now,
+            is_done=task.is_done
         )
