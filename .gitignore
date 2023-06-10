@@ -2,5 +2,5 @@ config.py
 /venv/
 __pycache__/
 /.idea/
-/db.sqlite
+/sqlite.db
 *.pyc
