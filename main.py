@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import uvicorn
@@ -11,6 +12,8 @@ from usecase.task.task_model import TaskReadModel, TaskCreateModel, TaskUpdateMo
 from usecase.task.task_service import TaskUseCase, TaskUseCaseImpl
 
 app = FastAPI()
+
+logger = logging.getLogger(__name__)
 
 create_tables()
 
@@ -31,9 +34,9 @@ def get_tasks(
     try:
         tasks = task_usecase_local.fetch_tasks()
     except Exception as e:
+        logger.error(e)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=e
         )
 
     return tasks
@@ -49,7 +52,7 @@ def get_tasks(
         }
     }
 )
-def get_book(
+def get_task(
     task_id: str,
     task_usecase_local: TaskUseCase = Depends(task_usecase)
 ):
@@ -61,9 +64,9 @@ def get_book(
             detail=e.message
         )
     except Exception as e:
+        logger.error(e)
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=e
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
     return task
@@ -81,9 +84,9 @@ def create_task(
     try:
         task = task_usecase_local.create_task(data)
     except Exception as e:
+        logger.error(e)
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=e
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
     return task
@@ -112,9 +115,9 @@ def update_task(
             detail=e.message
         )
     except Exception as e:
+        logger.error(e)
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=e
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
     return updated_task
@@ -141,9 +144,9 @@ def delete_task(
             detail=e.message
         )
     except Exception as e:
+        logger.error(e)
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=e
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
 
